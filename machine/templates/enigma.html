@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enigma Project</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center; /* Center the content */
+        }
+
+        h1 {
+            text-align: center; /* Center the heading */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            text-align: left; /* Align label text to the left */
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            text-align: left; /* Align input text to the left */
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>ENIGMA</h1>  
+
+    {% if messages %}
+    {% for message in messages %}
+    <h1>msg: {{ message }}</h1>
+    {% endfor %}
+    {% endif %}
+    
+
+    <form action="/enigma" method="post">
+        {%csrf_token%}
+        <label for="reflector">Reflector:</label>
+        <input type="text" id="reflector" name="reflector" placeholder="e.g. A" required>
+
+        <label for="keys">Keys:</label>
+        <input type="text" id="keys" name="keys" placeholder="e.g. DOG" required>
+
+        <label for="rotor1">Rotor 1:</label>
+        <input type="text" id="rotor1" name="rotor1" placeholder="e.g. I" required>
+
+        <label for="rotor2">Rotor 2:</label>
+        <input type="text" id="rotor2" name="rotor2" placeholder="e.g. II" required>
+
+        <label for="rotor3">Rotor 3:</label>
+        <input type="text" id="rotor3" name="rotor3" placeholder="e.g. III" required>
+
+        <label for="rotor3">Plugboard</label>
+        <input type="text" id="plugbd" name="plugbd" placeholder="e.g. AR GX" required>
+        
+        <label for="textMsg">Text Message:</label>
+        <textarea id="textmsg" name="textmsg" rows="4" required placeholder="e.g. TEST"></textarea>
+
+        <button type="submit">Submit</button>
+    </form>
+
+</body>
+
+</html>
