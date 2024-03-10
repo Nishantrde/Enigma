@@ -118,6 +118,13 @@ def enigma(request):
             op = op + encript(msg)
         print(op)
         messages.info(request, op)
+        keybrd.delete()
+        plgbrd.delete()
+        RI.delete()
+        RII.delete()
+        RIII.delete()
+        REFLT.delete()
+
     return render(request, "enigma.html")
 
 def login_page(request):
