@@ -9,13 +9,16 @@ from django.contrib.auth.decorators import login_required
 def enigma(request):
     if request.method == "POST":
         plgbd = str(request.POST.get("plugbd"))
-        plugbd =  plgbd.split()
-        reflector = request.POST.get("reflector")
-        keys = request.POST.get("keys")
+        plugbd =  plgbd.upper().split()
+        reflector = str(request.POST.get("reflector"))
+        reflector = reflector.upper()
+        keys = str(request.POST.get("keys"))
+        keys = keys.upper()
         rotor1 = int(request.POST.get("rotor1"))
         rotor2 = int(request.POST.get("rotor2"))
         rotor3 = int(request.POST.get("rotor3"))
-        textmsg = request.POST.get("textmsg")
+        textmsg = str(request.POST.get("textmsg"))
+        textmsg = textmsg.upper()
 
         keybrd = Keyboard.objects.create(user_id = "nis")
 
