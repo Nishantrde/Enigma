@@ -1,11 +1,7 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from machine.models import *
 from django.contrib import messages
-from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
 
-@login_required(login_url="/")
 def enigma(request):
     if request.method == "POST":
         plgbd = str(request.POST.get("plugbd"))
@@ -129,55 +125,6 @@ def enigma(request):
         REFLT.delete()
 
     return render(request, "enigma.html")
-
-def login_page(request):
-    if request.method == "POST":
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        if not User.objects.filter(username = username).exists():
-            messages.error(request, 'Invalid Username')
-            return redirect("/")
-        user = authenticate(username = username, password = password)
-
-        if user is None:
-            messages.error(request, "Invalid password")
-            return redirect("/")
-        else:
-            login(request, user)
-            return redirect("/enigma")
-        
-    messages.info(request, "login")
-    return render(request, "login.html")
-
-def logout_page(request):
-    logout(request)
-    return redirect('/')
-
-def register(request):
-    if request.method == "POST":
-        first_name = request.POST.get('First_name')
-        last_name = request.POST.get('Last_name')
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        user = User.objects.filter(username = username)
-
-        if user.exists():
-            messages.info(request, 'Username alredy taken')
-            return redirect('/register')
-         
-        user = User.objects.create(
-            first_name = first_name,
-            last_name = last_name,
-            username = username
-        )
-
-        user.set_password(password)
-        user.save()
-        messages.info(request, 'Account created successfully')
-        return redirect('/register')
-    
-    return render(request, "register.html")
 
 
 
