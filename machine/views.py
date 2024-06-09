@@ -9,7 +9,7 @@ def enigma(request):
         reflector = str(request.POST.get("reflector"))
         reflector = reflector.upper()
         keys = str(request.POST.get("keys"))
-        keys = keys.upper()
+        keys = keys.upper() 
         rotor1 = int(request.POST.get("rotor1"))
         rotor2 = int(request.POST.get("rotor2"))
         rotor3 = int(request.POST.get("rotor3"))
