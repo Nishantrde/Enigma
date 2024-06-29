@@ -123,8 +123,8 @@ def enigma(request):
         RII.delete()
         RIII.delete()
         REFLT.delete()
-    user_ip_address = request.META.get('REMOTE_ADDR', None)
-    return render(request, "enigma.html", {"ip":user_ip_address})
+    
+    return render(request, "enigma.html")
 
 
 
