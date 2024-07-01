@@ -154,13 +154,14 @@
 </head>
 <body>
     <div class="enigma-machine">
-        {% if messages %}
-            {% for message in messages %}
-                <h1>msg: {{ message }}</h1>
-            {% endfor %}
-        {% endif %}
+        
         <form id="enigmaForm" action="/" method="post">
             {% csrf_token %}
+            {% if messages %}
+            {% for message in messages %}
+                <h2>msg: {{ message }}</h2>
+            {% endfor %}
+        {% endif %}
             <h2>Rotor numbers</h2>
             <div class="rotors">
                 <input type="text" class="rotor" name="rotor1" maxlength="1" value="1" required>
