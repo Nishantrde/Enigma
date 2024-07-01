@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enigma Project</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+            background-color: #000000; /* Black background */
+            color: #00FF00; /* Green text */
+        }
+
+        h1 {
+            text-align: center;
+            color: #00FF00; /* Green text */
+        }
+
+        .container {
+            display: inline-block;
+            text-align: left;
+            background-size: cover;
+            background-position: center;
+            padding: 20px;
+            border: 2px solid #00FF00; /* Green border */
+            border-radius: 10px;
+            margin: 50px; /* Add horizontal and vertical space between containers */
+        }
+
+        .keyboard {
+            display: flex;
+            justify-content: space-around; /* Space keys evenly */
+            margin-bottom: 20px;
+        }
+
+        .key-column {
+            display: flex;
+            flex-direction: column; /* Stack keys vertically */
+            align-items: center;
+        }
+
+        .key {
+            margin: 2px;
+            padding: 1px;
+            color: #00FF00; /* Green text */
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #00FF00; /* Green text */
+        }
+
+        input,
+        textarea {
+            width: 100%; /* Full width within the form */
+            padding: 10px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+            background-color: #333333; /* Dark gray background */
+            color: #00FF00; /* Green text */
+            border: 1px solid #00FF00; /* Green border */
+        }
+
+        button {
+            padding: 10px;
+            background-color: #00FF00; /* Green background */
+            color: #000000; /* Black text */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%; /* Full width within the form */
+        }
+
+        button:hover {
+            background-color: #009900; /* Darker green background */
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>ENIGMA</h1>
+
+    {% if messages %}
+    {% for message in messages %}
+    <h1>msg: {{ message }}</h1>
+    {% endfor %}
+    {% endif %}
+
+    <form action="/" method="post">
+        {% csrf_token %}
+        <label for="reflector">Reflector:</label>
+        <input type="text" id="reflector" name="reflector" placeholder="e.g. A" required>
+
+        <label for="keys">Keys:</label>
+        <input type="text" id="keys" name="keys" placeholder="e.g. DOG" required>
+
+        <label for="rotor1">Rotor 1:</label>
+        <input type="text" id="rotor1" name="rotor1" placeholder="e.g. 1" required>
+
+        <label for="rotor2">Rotor 2:</label>
+        <input type="text" id="rotor2" name="rotor2" placeholder="e.g. 2" required>
+
+        <label for="rotor3">Rotor 3:</label>
+        <input type="text" id="rotor3" name="rotor3" placeholder="e.g. 3  (1,2,3,4,5) can be used" required>
+
+        <label for="plugbd">Plugboard:</label>
+        <input type="text" id="plugbd" name="plugbd" placeholder="e.g. AR GX" required>
+
+        <label for="textmsg">Text Message:</label>
+        <textarea id="textmsg" name="textmsg" rows="4" required placeholder="e.g. TEST"></textarea>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <div class="container">
+        <h2>Reflector</h2>
+        <div class="keyboard">
+            <div class="key-column">
+                {% for key in reflector.0 %}
+                <div class="key">{{ key }}</div>
+                {% endfor %}
+            </div>
+            <div class="key-column">
+                {% for key in reflector.1 %}
+                <div class="key">{{ key }}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Rotar_III</h2>
+        <div class="keyboard">
+            <div class="key-column">
+                {% for key in rotar3.0 %}
+                <div class="key">{{ key }}</div>
+                {% endfor %}
+            </div>
+            <div class="key-column">
+                {% for key in rotar3.1 %}
+                <div class="key">{{ key }}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    
+
+    <div class="container">
+        <h2>Rotar_II</h2>
+        <div class="keyboard">
+            <div class="key-column">
+                {% for key in rotar2.0 %}
+                <div class="key">{{ key }}</div>
+                {% endfor %}
+            </div>
+            <div class="key-column">
+                {% for key in rotar2.1 %}
+                <div class="key">{{ key }}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Rotar_I</h2>
+        <div class="keyboard">
+            <div class="key-column">
+                {% for key in rotar1.0 %}
+                <div class="key">{{ key }}</div>
+                {% endfor %}
+            </div>
+            <div class="key-column">
+                {% for key in rotar1.1 %}
+                <div class="key">{{ key }}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Plugboard</h2>
+        <div class="keyboard">
+            <div class="key-column">
+                {% for key in plugboard.0 %}
+                <div class="key">{{ key }}</div>
+                {% endfor %}
+            </div>
+            <div class="key-column">
+                {% for key in plugboard.1 %}
+                <div class="key">{{ key }}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Keyboard</h2>
+        <div class="keyboard">
+            <div class="key-column">
+            {% for key in keyboard %}
+            <div class="key">{{ key }}</div>
+            {% endfor %}
+        </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

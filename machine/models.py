@@ -1,7 +1,6 @@
 from django.db import models
 
 class Inventory(models.Model):
-    user_id = models.CharField(max_length = 20, default='DOG')
     RotorI = ["EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q"] 
     RotorII = ["AJDKSIRUXBLHWTMCQGZNPYFVOE", "E"] 
     RotorIII = ["BDFHJLCPRTXVZNYEIWGAKMUSQO", "V"] 
@@ -17,7 +16,6 @@ class Inventory(models.Model):
         return self.Keys
 
 class Keyboard(models.Model):
-    user_id = models.CharField(max_length = 20, default='DOG')
     keys = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     letter = models.CharField(max_length=1, default='A')
     signal = models.IntegerField(default=0)
@@ -35,7 +33,6 @@ class Keyboard(models.Model):
 
 
 class Plugboard(models.Model):
-    user_id = models.CharField(max_length = 20, default='DOG')
     right = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     left = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     pairs = models.JSONField(default=list)
@@ -64,7 +61,6 @@ class Plugboard(models.Model):
         return self.left
 
 class Rotor_I(models.Model):
-    user_id = models.CharField(max_length = 20, default='DOG')
     right = models.CharField(max_length=26, default="ABCDEFGHIJKLMNOPQRSTUVWXYZ")
     left = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     n = models.IntegerField(default=1)
@@ -122,7 +118,6 @@ class Rotor_II(models.Model):
 
 
 class Rotor_III(models.Model):
-    user_id = models.CharField(max_length = 20, default='DOG')
     right = models.CharField(max_length=26, default="ABCDEFGHIJKLMNOPQRSTUVWXYZ")
     left = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     n = models.IntegerField(default=1)
@@ -150,7 +145,6 @@ class Rotor_III(models.Model):
         return self.right
 
 class Reflector(models.Model):
-    user_id = models.CharField(max_length = 20, default='DOG')
     right = models.CharField(max_length=26, default="ABCDEFGHIJKLMNOPQRSTUVWXYZ")
     left = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     signal = models.IntegerField(default=0)

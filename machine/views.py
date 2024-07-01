@@ -3,6 +3,12 @@ from machine.models import *
 from django.contrib import messages
 
 def enigma(request):
+    keyboard = ""
+    plugboard = []
+    rotar1 = []
+    rotar2 = []
+    rotar3 = []
+    reflector_ = []
     if request.method == "POST":
         plgbd = str(request.POST.get("plugbd"))
         plugbd =  plgbd.upper().split()
@@ -16,9 +22,9 @@ def enigma(request):
         textmsg = str(request.POST.get("textmsg"))
         textmsg = textmsg.upper()
 
-        keybrd = Keyboard.objects.create(user_id = "nis")
+        keybrd = Keyboard.objects.create()
 
-        plgbrd = Plugboard.objects.create(user_id = "nis", pairs = plugbd)
+        plgbrd = Plugboard.objects.create(pairs = plugbd)
         
         if rotor1 == 1:
             RotI = Inventory.RotorI[0]
@@ -26,8 +32,8 @@ def enigma(request):
             RotI = Inventory.RotorII[0]
         elif rotor1 == 3:
             RotI = Inventory.RotorIII[0]
-        elif rotor1 == 4:int(
-            RotI = Inventory.RotorIV[0])
+        elif rotor1 == 4:
+            RotI = Inventory.RotorIV[0]
         elif rotor1 == 5:
             RotI = Inventory.RotorV[0]
 
@@ -70,15 +76,15 @@ def enigma(request):
         elif reflector == "C":
             reflt = Inventory.ReflectorC
 
-        Keys = Inventory.objects.create(user_id = "nis", Keys = keys)
+        Keys = Inventory.objects.create(Keys = keys)
 
         plgbrd.swap()
 
-        RI = Rotor_I.objects.create(user_id = "nis", right = RotI)
-        RII = Rotor_II.objects.create(user_id = "nis", right = RotII)
-        RIII = Rotor_III.objects.create(user_id = "nis", right = RotIII)
+        RI = Rotor_I.objects.create(right = RotI)
+        RII = Rotor_II.objects.create(right = RotII)
+        RIII = Rotor_III.objects.create(right = RotIII)
         
-        REFLT = Reflector.objects.create(user_id = "nis", right = reflt) 
+        REFLT = Reflector.objects.create(right = reflt) 
         
         RI.rotate_to_char(Keys.Keys[0])
         RII.rotate_to_char(Keys.Keys[1])
@@ -117,13 +123,25 @@ def enigma(request):
             op = op + encript(msg)
         print(op)
         messages.info(request, op)
+        plugboard.append(plgbrd.left)
+        rotar1.append(RI.right)
+        rotar2.append(RII.right)
+        rotar3.append(RIII.right)
+        reflector_.append(REFLT.right)
         keybrd.delete()
         plgbrd.delete()
         RI.delete()
         RII.delete()
         RIII.delete()
         REFLT.delete()
-    
+    keyboard = Keyboard.keys
+    plugboard.append(Plugboard.right)
+    rotar1.append(Rotor_I.left)
+    rotar2.append(Rotor_II.left)
+    rotar3.append(Rotor_III.left)
+    reflector_.append(Reflector.left)
+    print(keyboard, plugboard)
+    # return render(request, "enigma2.html",{"keyboard":keyboard, "plugboard":plugboard, "rotar1":rotar1, "rotar2":rotar2 , "rotar3":rotar3, "reflector":reflector_})
     return render(request, "enigma.html")
 
 
