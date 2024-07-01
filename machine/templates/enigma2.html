@@ -1,216 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Enigma Project</title>
+    <title>Enigma Machine</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            text-align: center;
-            background-color: #000000; /* Black background */
-            color: #00FF00; /* Green text */
-        }
-
-        h1 {
-            text-align: center;
-            color: #00FF00; /* Green text */
-        }
-
-        .container {
-            display: inline-block;
-            text-align: left;
-            background-size: cover;
-            background-position: center;
-            padding: 20px;
-            border: 2px solid #00FF00; /* Green border */
-            border-radius: 10px;
-            margin: 50px; /* Add horizontal and vertical space between containers */
-        }
-
-        .keyboard {
             display: flex;
-            justify-content: space-around; /* Space keys evenly */
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #1d1f21;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #c5c6c7;
+            margin: 0;
+        }
+
+        .enigma-machine {
+            background-color: #282a2e;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.7);
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .rotors {
+            display: flex;
+            justify-content: center;
             margin-bottom: 20px;
         }
 
-        .key-column {
+        .rotor {
+            width: 50px;
+            height: 50px;
+            margin: 0 10px;
+            text-align: center;
+            font-size: 24px;
+            background-color: #3b3e43;
+            color: #f5f5f5;
+            border: 2px solid #50555a;
+            border-radius: 5px;
+        }
+
+        .keyboard, .lampboard {
             display: flex;
-            flex-direction: column; /* Stack keys vertically */
+            flex-direction: column;
             align-items: center;
         }
 
-        .key {
-            margin: 2px;
-            padding: 1px;
-            color: #00FF00; /* Green text */
-            text-align: center;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #00FF00; /* Green text */
-        }
-
-        input,
-        textarea {
-            width: 100%; /* Full width within the form */
-            padding: 10px;
-            margin-bottom: 12px;
-            box-sizing: border-box;
-            background-color: #333333; /* Dark gray background */
-            color: #00FF00; /* Green text */
-            border: 1px solid #00FF00; /* Green border */
+        .row {
+            display: flex;
+            justify-content: center;
+            margin: 5px 0;
         }
 
         button {
-            padding: 10px;
-            background-color: #00FF00; /* Green background */
-            color: #000000; /* Black text */
+            width: 50px;
+            height: 50px;
+            margin: 0 5px;
+            font-size: 18px;
+            background-color: #505050;
             border: none;
+            color: white;
             border-radius: 5px;
             cursor: pointer;
-            width: 100%; /* Full width within the form */
+            transition: background-color 0.2s;
         }
 
         button:hover {
-            background-color: #009900; /* Darker green background */
+            background-color: #707070;
+        }
+
+        .lamp {
+            width: 50px;
+            height: 50px;
+            margin: 0 5px;
+            font-size: 18px;
+            background-color: #1d1f21;
+            border: 2px solid #505050;
+            color: #707070;
+            border-radius: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input, textarea {
+            background-color: #3b3e43;
+            color: #c5c6c7;
+            border: 2px solid #50555a;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            width: 80%;
+            max-width: 400px;
+            font-size: 16px;
+        }
+
+        label {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        button[type="submit"] {
+            width: auto;
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #61dafb;
+            border: none;
+            color: black;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #21a1f1;
         }
     </style>
 </head>
-
 <body>
-
-    <h1>ENIGMA</h1>
-
-    {% if messages %}
-    {% for message in messages %}
-    <h1>msg: {{ message }}</h1>
-    {% endfor %}
-    {% endif %}
-
-    <form action="/" method="post">
-        {% csrf_token %}
-        <label for="reflector">Reflector:</label>
-        <input type="text" id="reflector" name="reflector" placeholder="e.g. A" required>
-
-        <label for="keys">Keys:</label>
-        <input type="text" id="keys" name="keys" placeholder="e.g. DOG" required>
-
-        <label for="rotor1">Rotor 1:</label>
-        <input type="text" id="rotor1" name="rotor1" placeholder="e.g. 1" required>
-
-        <label for="rotor2">Rotor 2:</label>
-        <input type="text" id="rotor2" name="rotor2" placeholder="e.g. 2" required>
-
-        <label for="rotor3">Rotor 3:</label>
-        <input type="text" id="rotor3" name="rotor3" placeholder="e.g. 3  (1,2,3,4,5) can be used" required>
-
-        <label for="plugbd">Plugboard:</label>
-        <input type="text" id="plugbd" name="plugbd" placeholder="e.g. AR GX" required>
-
-        <label for="textmsg">Text Message:</label>
-        <textarea id="textmsg" name="textmsg" rows="4" required placeholder="e.g. TEST"></textarea>
-
-        <button type="submit">Submit</button>
-    </form>
-
-    <div class="container">
-        <h2>Reflector</h2>
-        <div class="keyboard">
-            <div class="key-column">
-                {% for key in reflector.0 %}
-                <div class="key">{{ key }}</div>
-                {% endfor %}
-            </div>
-            <div class="key-column">
-                {% for key in reflector.1 %}
-                <div class="key">{{ key }}</div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <h2>Rotar_III</h2>
-        <div class="keyboard">
-            <div class="key-column">
-                {% for key in rotar3.0 %}
-                <div class="key">{{ key }}</div>
-                {% endfor %}
-            </div>
-            <div class="key-column">
-                {% for key in rotar3.1 %}
-                <div class="key">{{ key }}</div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-
-    
-
-    <div class="container">
-        <h2>Rotar_II</h2>
-        <div class="keyboard">
-            <div class="key-column">
-                {% for key in rotar2.0 %}
-                <div class="key">{{ key }}</div>
-                {% endfor %}
-            </div>
-            <div class="key-column">
-                {% for key in rotar2.1 %}
-                <div class="key">{{ key }}</div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <h2>Rotar_I</h2>
-        <div class="keyboard">
-            <div class="key-column">
-                {% for key in rotar1.0 %}
-                <div class="key">{{ key }}</div>
-                {% endfor %}
-            </div>
-            <div class="key-column">
-                {% for key in rotar1.1 %}
-                <div class="key">{{ key }}</div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <h2>Plugboard</h2>
-        <div class="keyboard">
-            <div class="key-column">
-                {% for key in plugboard.0 %}
-                <div class="key">{{ key }}</div>
-                {% endfor %}
-            </div>
-            <div class="key-column">
-                {% for key in plugboard.1 %}
-                <div class="key">{{ key }}</div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <h2>Keyboard</h2>
-        <div class="keyboard">
-            <div class="key-column">
-            {% for key in keyboard %}
-            <div class="key">{{ key }}</div>
+    <div class="enigma-machine">
+        {% if messages %}
+            {% for message in messages %}
+                <h1>msg: {{ message }}</h1>
             {% endfor %}
-        </div>
-        </div>
+        {% endif %}
+        <form id="enigmaForm" action="/" method="post">
+            {% csrf_token %}
+            <h2>Rotor numbers</h2>
+            <div class="rotors">
+                <input type="text" class="rotor" name="rotor1" maxlength="1" value="1" required>
+                <input type="text" class="rotor" name="rotor2" maxlength="1" value="2" required>
+                <input type="text" class="rotor" name="rotor3" maxlength="1" value="3" required>
+            </div>
+            <h2>Notch</h2>
+            <div class="rotors">
+                <input type="text" class="rotor" name="notch3" maxlength="1" value="D" required>
+                <input type="text" class="rotor" name="notch2" maxlength="1" value="O" required>
+                <input type="text" class="rotor" name="notch1" maxlength="1" value="G" required>
+            </div>
+
+            <label for="reflector">Reflector:</label>
+            <input type="text" id="reflector" name="reflector" placeholder="e.g. A" required>
+            
+            <div id="plugboard-display">Plugboard Settings: </div>
+
+            <div class="lampboard">
+                <div class="row">
+                    <div class="lamp">Q</div><div class="lamp">W</div><div class="lamp">E</div><div class="lamp">R</div><div class="lamp">T</div><div class="lamp">Y</div><div class="lamp">U</div><div class="lamp">I</div><div class="lamp">O</div><div class="lamp">P</div>
+                </div>
+                <div class="row">
+                    <div class="lamp">A</div><div class="lamp">S</div><div class="lamp">D</div><div class="lamp">F</div><div class="lamp">G</div><div class="lamp">H</div><div class="lamp">J</div><div class="lamp">K</div><div class="lamp">L</div>
+                </div>
+                <div class="row">
+                    <div class="lamp">Z</div><div class="lamp">X</div><div class="lamp">C</div><div class="lamp">V</div><div class="lamp">B</div><div class="lamp">N</div><div class="lamp">M</div>
+                </div>
+            </div>
+
+            <label for="textmsg">Text Message:</label>
+            <textarea id="textmsg" name="textmsg" rows="4" required placeholder="e.g. TEST"></textarea>
+
+            <button type="submit">Submit</button>
+            <input type="hidden" id="combinedRotors" name="combinedRotors">
+        </form>
     </div>
+    <script>
+        document.getElementById('enigmaForm').addEventListener('submit', function(event) {
+            let rotorValues = '';
+            document.querySelectorAll('.rotor').forEach(rotor => {
+                rotorValues += rotor.value;
+            });
+            document.getElementById('combinedRotors').value = rotorValues;
+        });
 
+        const plugboardDisplay = document.getElementById('plugboard-display');
+        let selectedLamps = [];
+
+        document.querySelectorAll('.lamp').forEach(lamp => {
+            lamp.addEventListener('click', () => {
+                if (selectedLamps.length < 2) {
+                    lamp.style.backgroundColor = '#f1c40f';
+                    lamp.style.color = '#1d1f21';
+                    selectedLamps.push(lamp.textContent);
+                }
+                if (selectedLamps.length === 2) {
+                    const pair = selectedLamps.join('');
+                    const existingText = plugboardDisplay.textContent;
+                    plugboardDisplay.textContent = existingText + ' ' + pair;
+                    selectedLamps = [];
+                    document.querySelectorAll('.lamp').forEach(lamp => {
+                        lamp.style.backgroundColor = '#1d1f21';
+                        lamp.style.color = '#707070';
+                    });
+                }
+            });
+        });
+    </script>
 </body>
-
 </html>

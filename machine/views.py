@@ -5,20 +5,22 @@ from django.contrib import messages
 def enigma(request):
     keyboard = ""
     plugboard = []
-    rotar1 = []
-    rotar2 = []
-    rotar3 = []
+    rotar_1 = []
+    rotar_2 = []
+    rotar_3 = []
     reflector_ = []
     if request.method == "POST":
         plgbd = str(request.POST.get("plugbd"))
         plugbd =  plgbd.upper().split()
         reflector = str(request.POST.get("reflector"))
         reflector = reflector.upper()
-        keys = str(request.POST.get("keys"))
+        keys = str(request.POST.get("notch3")) + str(request.POST.get("notch2")) + str(request.POST.get("notch1"))
+        print(keys)
         keys = keys.upper()
         rotor1 = int(request.POST.get("rotor1"))
         rotor2 = int(request.POST.get("rotor2"))
         rotor3 = int(request.POST.get("rotor3"))
+        print(rotor1)
         textmsg = str(request.POST.get("textmsg"))
         textmsg = textmsg.upper()
 
@@ -124,9 +126,9 @@ def enigma(request):
         print(op)
         messages.info(request, op)
         plugboard.append(plgbrd.left)
-        rotar1.append(RI.right)
-        rotar2.append(RII.right)
-        rotar3.append(RIII.right)
+        rotar_1.append(RI.right)
+        rotar_2.append(RII.right)
+        rotar_3.append(RIII.right)
         reflector_.append(REFLT.right)
         keybrd.delete()
         plgbrd.delete()
@@ -136,13 +138,12 @@ def enigma(request):
         REFLT.delete()
     keyboard = Keyboard.keys
     plugboard.append(Plugboard.right)
-    rotar1.append(Rotor_I.left)
-    rotar2.append(Rotor_II.left)
-    rotar3.append(Rotor_III.left)
+    rotar_1.append(Rotor_I.left)
+    rotar_2.append(Rotor_II.left)
+    rotar_3.append(Rotor_III.left)
     reflector_.append(Reflector.left)
     print(keyboard, plugboard)
-    # return render(request, "enigma2.html",{"keyboard":keyboard, "plugboard":plugboard, "rotar1":rotar1, "rotar2":rotar2 , "rotar3":rotar3, "reflector":reflector_})
-    return render(request, "enigma.html")
+    return render(request, "enigma2.html")
 
 
 
