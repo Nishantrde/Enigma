@@ -20,7 +20,7 @@ def enigma(request):
         rotor1 = int(request.POST.get("rotor1"))
         rotor2 = int(request.POST.get("rotor2"))
         rotor3 = int(request.POST.get("rotor3"))
-        print(rotor1)
+        
         textmsg = str(request.POST.get("textmsg"))
         textmsg = textmsg.upper()
 

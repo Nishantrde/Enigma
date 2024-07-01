@@ -72,20 +72,41 @@
             background-color: #707070;
         }
 
-        .lamp {
-            width: 50px;
-            height: 50px;
-            margin: 0 5px;
-            font-size: 18px;
-            background-color: #1d1f21;
-            border: 2px solid #505050;
-            color: #707070;
-            border-radius: 5px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background-color 0.2s, color 0.2s;
-        }
+        .lampboard {
+    display: flex;
+    flex-wrap: wrap; /* Allow lamps to wrap to the next line */
+    justify-content: center;
+    max-width: 100%; /* Ensure it doesn't overflow on smaller screens */
+}
+
+.lamp {
+    width: 50px; /* Fixed width */
+    height: 50px; /* Fixed height */
+    margin: 0 5px;
+    font-size: 18px;
+    background-color: #1d1f21;
+    border: 2px solid #505050;
+    color: #707070;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+
+@media (max-width: 600px) {
+    .lamp {
+        width: 20%; /* Adjust width for smaller screens */
+    }
+}
+
+@media (max-width: 400px) {
+    .lamp {
+        width: 30%; /* Adjust width for even smaller screens */
+    }
+}
+
 
         form {
             display: flex;
