@@ -155,7 +155,7 @@
 <body>
     <div class="enigma-machine">
         
-        <form id="enigmaForm" action="/" method="post">
+        <form id="enigmaForm" action="/enigma" method="post">
             {% csrf_token %}
             {% if messages %}
             {% for message in messages %}

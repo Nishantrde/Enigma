@@ -2,7 +2,8 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("", views.enigma, name="enigma"),
+    path("enigma", views.enigma),
+    path("", views.doc),
 ]
 
 

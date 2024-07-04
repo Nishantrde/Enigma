@@ -18,10 +18,7 @@ class Enigma:
             self.r1.rotate()
             self.r2.rotate()
             self.r3.rotate()
-        # elif self.r2.left[0] == self.r2.notch:
-        #     self.r1.rotate()
-        #     self.r2.rotate()
-        #     self.r3.rotate()
+        
         elif self.r3.left[0] == self.r3.notch:
             self.r2.rotate()
             self.r3.rotate()

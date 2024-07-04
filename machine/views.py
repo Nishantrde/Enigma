@@ -145,6 +145,8 @@ def enigma(request):
     print(keyboard, plugboard)
     return render(request, "enigma2.html")
 
+def doc(request):
+    return render(request, "doc.html")
 
 
 

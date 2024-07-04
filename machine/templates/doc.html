@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enigma Machine Documentation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/monokai-sublime.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #020f1a;
+            color: #f8f8f2;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        h1 {
+            color: #50fa7b;
+            font-size: 2.5em;
+        }
+        h2 {
+            color: #10ef2e;
+            border-bottom: 2px solid #c6e807;
+            padding-bottom: 10px;
+            
+        }
+        p {
+            color: #d2f00e;
+        }
+        pre {
+            background-color: #44475a;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #6272a4;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            color: #d2f00e;
+            max-height: 400px; /* Maximum height for the pre element */
+        }
+        code {
+            color: #ffb86c;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #6272a4;
+        }
+        .image-container {
+            text-align: center; /* Center the image container */
+            margin-bottom: 20px;
+        }
+        .image-container img {
+            width: 300px; /* Set the desired width */
+            height: auto;
+            text-align: center;
+         /* Maintain aspect ratio */
+        }
+        a{
+            color: #10ef2e;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <label class="image-container">
+            {% load static %}
+            <img src="{% static 'enigma_logo.png' %}">
+
+            </label><br><br>
+            <label><h3>The Enigma machine was a cipher device used by Germany during World War II, employing rotors to encrypt messages. Its complexity and cryptographic strength were significant for its time, later contributing to advancements in cryptanalysis.</h3><img src="{% static 'enigma_machine.png' %}">
+            </label>
+    </header>
+    
+    
+
+    <section id="key-board-py">
+        <h2>Key_board.py</h2>
+        <p>This class represents the keyboard of the Enigma machine. It converts letters to signals and vice versa.</p>
+        <pre><code class="python">
+class Keyboard:
+
+    def forward(self, letter):
+        signal = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".find(letter)
+        return signal
+
+    def backward(self, signal):
+        letter = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[signal]
+        return letter
+        </code></pre>
+    </section>
+
+    <section id="plugboard-py">
+        <h2>Plugboard.py</h2>
+        <p>This class represents the plugboard of the Enigma machine, which allows for the swapping of letter pairs before and after the main rotor encryption process.</p>
+        <pre><code class="python">
+class Plugboard:
+    def __init__(self, pairs):
+        self.left = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        self.right = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        for pair in pairs:
+            A = pair[0]
+            B = pair[1]
+            pos_a = self.left.find(A)
+            pos_b = self.left.find(B)
+            self.left = self.left[:pos_a] + B + self.left[pos_a+1:]
+            self.left = self.left[:pos_b] + A + self.left[pos_b+1:]
+
+    def forward(self, signal):
+        letter = self.right[signal]
+        signal = self.left.find(letter)
+        return signal
+
+    def backward(self, signal):
+        letter = self.left[signal]
+        signal = self.right.find(letter)
+        return signal
+        </code></pre>
+    </section>
+
+    <section id="reflect-py">
+        <h2>Reflect.py</h2>
+        <p>This class represents the reflector of the Enigma machine. It reflects the signal back through the rotors in the opposite direction.</p>
+        <pre><code class="python">
+class Reflect:
+    def __init__(self, wiring):
+        self.left = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        self.right = wiring
+
+    def reflector(self, signal):
+        letter = self.right[signal]
+        signal = self.left.find(letter)
+        return signal
+        </code></pre>
+    </section>
+
+    <section id="rotar-py">
+        <h2>Rotar.py</h2>
+        <p>This class represents a single rotor in the Enigma machine. Rotors advance with each keypress and scramble the signal in a unique way based on their wiring.</p>
+        <pre><code class="python">
+class Rotor:
+    def __init__(self, wiring, notch):
+        self.left = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        self.right = wiring
+        self.notch = notch
+
+    def forward(self, signal):
+        letter = self.right[signal]
+        signal = self.left.find(letter)
+        return signal
+
+    def backward(self, signal):
+        letter = self.left[signal]
+        signal = self.right.find(letter)
+        return signal
+
+    def show(self):
+        print(self.left)
+        print(self.right)
+        print()
+
+    def rotate(self, n=1):
+        for _ in range(n):
+            self.left = self.left[1:] + self.left[0]
+            self.right = self.right[1:] + self.right[0]
+
+    def rotate_to_letter(self, letter):
+        n = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".find(letter)
+        self.rotate(n)
+        </code></pre>
+    </section>
+    <section id="enigma-py">
+        <h2>Enigma.py</h2>
+        <p>This class represents the Enigma machine, which combines the keyboard, plugboard, rotors, and reflector. The <code>set_key</code> method sets the initial rotor positions, and the <code>encrypt</code> method handles the encryption process for a single letter.</p>
+        <pre><code class="python">
+class Enigma:
+    def __init__(self, kb, pb, r1, r2, r3, re):
+        self.kb = kb
+        self.pb = pb
+        self.r1 = r1
+        self.r2 = r2
+        self.r3 = r3
+        self.re = re
+
+    def set_key(self, key):
+        self.r1.rotate_to_letter(key[0])
+        self.r2.rotate_to_letter(key[1])
+        self.r3.rotate_to_letter(key[2])
+
+    def encrypt(self, letter):
+        if self.r2.left[0] == self.r2.notch and self.r3.left[0] == self.r3.notch:
+            self.r1.rotate()
+            self.r2.rotate()
+            self.r3.rotate()
+
+        elif self.r3.left[0] == self.r3.notch:
+            self.r2.rotate()
+            self.r3.rotate()
+        else:
+            self.r3.rotate()
+
+        signal = self.kb.forward(letter)
+        signal = self.pb.forward(signal)
+        signal = self.r3.forward(signal)
+        signal = self.r2.forward(signal)
+        signal = self.r1.forward(signal)
+        signal = self.re.reflector(signal)
+        signal = self.r1.backward(signal)
+        signal = self.r2.backward(signal)
+        signal = self.r3.backward(signal)
+        signal = self.pb.backward(signal)
+        letter = self.kb.backward(signal)
+
+        return letter       
+        </code></pre>
+    </section>
+    <section id="main-py">
+        <h2>Main.py</h2>
+        <p>This is the main script that puts together all components of the Enigma machine and demonstrates its usage with an example encryption.</p>
+        <pre><code class="python">
+from key_board import Keyboard
+from plugboard import Plugboard
+from rotor import Rotor
+from reflect import Reflect
+from enigma import Enigma
+
+I = Rotor("EKMFLGDQVZNTOWYHXUSPAIBRCJ", "Q")
+II = Rotor("AJDKSIRUXBLHWTMCQGZNPYFVOE", "E")
+III = Rotor("BDFHJLCPRTXVZNYEIWGAKMUSQO", "V")
+IV = Rotor("ESOVPZJAYQUIRHXLNFTGKDCMWB", "J")
+V = Rotor("VZBRGITYUPSDNHLXAWMJQOFECK", "Z")
+
+A = Reflect("EJMZALYXVBWFCRQUONTSPIKHGD")
+B = Reflect("YRUHQSLDPXNGOKMIEBFZCWVJAT")
+C = Reflect("FVPJIAOYEDRZXWGCTKUQSBNMHL")
+
+KB = Keyboard()
+PB = Plugboard(["AR", "GK", "OX"])
+
+ENIGMA = Enigma(KB, PB, I, II, III, A)
+
+op = ""
+ENIGMA.set_key("DOG")
+for msg in "NGMC":
+    op = op + ENIGMA.encrypt(msg)
+print(op)
+
+# print(ENIGMA.encrypt("A"))
+        </code></pre>
+    </section>
+    <a href="/enigma">Try here</a>
+
+    <footer>
+        <p>&copy; 2024 Nisant Garg. All rights reserved.</p>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+</body>
+</html>
