@@ -166,6 +166,45 @@ The **Rotars** had **gears.** The right most **rotar** have 24 teeth which is eq
 
 ![App Screenshot](https://res.cloudinary.com/dwfdyavop/image/upload/v1731251199/Screenshot_2024-11-10_070617_xnfgqy.png)
 
+Same like this I have this program which just mimic this process. Here **self.r3.rotate()**
+ right most rotar which rotates at every key stroke and **self.r2.rotate()** rotates when **self.r3.rotate()** complete 24 strokes and same as **self.r1.rotate()**. 
+
+```python
+def encript(self, letter):
+        if self.r2.left[0] == self.r2.notch and self.r3.left[0] == self.r3.notch:
+            self.r1.rotate()
+            self.r2.rotate()
+            self.r3.rotate()
+        
+        elif self.r3.left[0] == self.r3.notch:
+            self.r2.rotate()
+            self.r3.rotate()
+        else:
+            self.r3.rotate()
+```
+
+Then we take the letter argument then pass to **forward** functions of the **objects** and then to reflector and the back to **backward** function of the **objects.** and then to keyboard which then returns the letter.
+```python
+        signal = self.kb.forward(letter)
+        signal = self.pb.forward(signal)
+        signal = self.r3.forward(signal)
+        signal = self.r2.forward(signal)
+        signal = self.r1.forward(signal)
+        signal = self.re.reflector(signal)
+        signal = self.r1.backward(signal)
+        signal = self.r2.backward(signal)
+        signal = self.r3.backward(signal)
+        signal = self.pb.backward(signal)
+        letter = self.kb.backward(signal)
+
+        return letter       
+```
+Below is working **visualization** of this **Enigma** program.
+
+![App Screenshot](https://res.cloudinary.com/dwfdyavop/image/upload/v1731257415/Screenshot_2024-11-10_084913_m4kgps.png)
+
+
+
 ## [Main.py🔗🧑‍💻](https://github.com/Nishantrde/Enigma/blob/master/machine/test_machine/main.py)
 Here we imported all the parts of machine like **Keyboard, Plugboard, Rotar, Reflector** and the machine **Enigma.**
 
