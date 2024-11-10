@@ -88,7 +88,7 @@ class Rotor:
         self.right = wiring
         self.notch = notch
 ```
-then we call the **rotate_to_letter(self, letter)** which first finds out how much the rotar should raote by finding the index of the letter in the string **"ABCDEFGHIJKLMNOPQRSTUVWXYZ"** and then it calls the **rotate(self, n=1)** function which rotates the rotar that many times so that it **index** or **notch.**
+Then we call the **rotate_to_letter(self, letter)** which first finds out how much the rotar should raote by finding the index of the letter in the string **"ABCDEFGHIJKLMNOPQRSTUVWXYZ"** and then it calls the **rotate(self, n=1)** function which rotates the rotar that many times so that it **index** or **notch.**
 ```python
 def rotate(self, n=1):
         for _ in range(n):
