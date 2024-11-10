@@ -14,6 +14,12 @@ The Enigma machine is a cipher device developed and used in the early- to mid-20
 # Machines implementations
 ## [Keyboard.py🔗](https://github.com/Nishantrde/Enigma/blob/master/machine/test_machine/key_board.py)
 
+Below is the **WW II Enigma Keyboard** just look and also sounded as a typewriter.
+
+(*Fun fact it also QWERTY System*)
+
+![App Screenshot](https://res.cloudinary.com/dwfdyavop/image/upload/v1731223928/key_board_vyphgw.jpg)
+
 This program takes the letter and **returns the index as a signal.**
 
 
@@ -32,6 +38,10 @@ class Keyboard:
 ![App Screenshot](https://res.cloudinary.com/dwfdyavop/image/upload/v1730796825/index_0_myaqhq.png)
 
 ## [Plugboard.py🔗](https://github.com/Nishantrde/Enigma/blob/master/machine/test_machine/plugboard.py)
+
+This is a **Plugboard** just loacted below the **keyboard.** Generely it uses 10 **Plug Wires** to **swap** the **letters.** 
+
+![App Screenshot](https://res.cloudinary.com/dwfdyavop/image/upload/v1731224218/plugboard_ivbnlw.jpg)
 
 This program takes a **list** as an argument which contains **strings** of two letters which are to be swapped, ( e.g **["AR", "GK", "OX"]**) by finding the index form **left** and swaps its.
 
