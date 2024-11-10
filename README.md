@@ -100,3 +100,33 @@ def rotate(self, n=1):
         self.rotate(n)
 ```
 ![App Screenshot](https://res.cloudinary.com/dwfdyavop/image/upload/v1731219074/Screenshot_2024-11-09_221055_fsoeaw.png)
+
+## [Reflector.py🔗](https://github.com/Nishantrde/Enigma/blob/master/machine/test_machine/reflect.py)
+
+This program just take the **signal** and **throws back** the signal to **rotars** by changing the **signals.**
+**e.g**
+
+```python
+A = Reflect("EJMZALYXVBWFCRQUONTSPIKHGD")
+B = Reflect("YRUHQSLDPXNGOKMIEBFZCWVJAT")
+C = Reflect("FVPJIAOYEDRZXWGCTKUQSBNMHL")
+```
+**"EJMZALYXVBWFCRQUONTSPIKHGD"** is a historical refletor used during the war. below is the a reflector which shows where and how it was placed in the machine.
+
+![App Screenshot](https://res.cloudinary.com/dwfdyavop/image/upload/v1731223579/reflector_bjvg3j.jpg)
+
+It takes argument **wiring** and assin it to **self.right** and **self.left** gets assin by **"ABCDEFGHIJKLMNOPQRSTUVWXYZ"**. Then we call this function **reflector(self, signal)**
+takes the **signal** and finds it in letter in **self.right** and then it find the index of the letter in **self.left** and returns the **signal.**
+
+```python
+class Reflect:
+    def __init__(self, wiring):
+        self.left = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        self.right = wiring
+        
+    def reflector(self, signal):
+        letter = self.right[signal]
+        signal = self.left.find(letter)
+        return signal
+```
+![App Screenshot](https://res.cloudinary.com/dwfdyavop/image/upload/v1731223237/Screenshot_2024-11-09_232016_nxalqq.png)
