@@ -648,7 +648,7 @@ class Reflector(models.Model):
 ## Methods:
 **reflector(signal):** Reflects the signal through the reflector.
 
-## Enigma Machine Projectℹ️
+## Enigma Machine Project Sourcesℹ️
 
 I have developed and deployed an Enigma Machine simulation in Django. You can learn more about the project from the following YouTube videos:
 
