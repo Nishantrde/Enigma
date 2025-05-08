@@ -2,7 +2,7 @@
 # Enigma simulation 📜
 
 A Python simulation to accurately replicate the Enigma Machine’s encryption and decryption
-processes and expanded it into a web-based version using Django for backend logic.
+processes and expanded it into a web-based version using Django for backend logic. 
 
 # About Enigma ℹ️
 
